@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>채우리스튜디오</title>
+<meta property="og:title" content="채우리스튜디오">
+<meta property="og:description" content="브랜드 릴스·숏폼 기획, 촬영, 편집. 첫 3초에 멈추게, 끝까지 보게.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0E0E0F">
+<meta name="description" content="채우리스튜디오 — 브랜드 릴스·숏폼 기획, 촬영, 편집">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Archivo:wght@600;800&display=swap">
+<style>
+/* Layout: 단일 다크 테마 · 모바일 1열 → 데스크톱 2열 히어로 / 그리드, 성과 사례가 첫 스크롤 */
+:root{
+  --bg:#0E0E0F; --surface:#18181A; --surface-2:#232326; --line:#2A2A2E;
+  --fg:#F3F3F1; --muted:#A2A2A6; --dim:#7C7C82;
+  --accent:#C6F24E; --on-accent:#0E0E0F;
+  --sans:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --label:'Archivo','Noto Sans KR',system-ui,sans-serif;
+  --r:16px; --wrap:1120px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-0.02em}
+p{margin:0}
+
+/* header */
+.hd{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.logo{font-weight:900;font-size:20px;text-decoration:none;letter-spacing:-0.03em;color:var(--accent)}
+.logo span{color:var(--accent)}
+.nav{display:none;gap:28px;font-size:14px;color:var(--muted)}
+.nav a{text-decoration:none;transition:color .2s}.nav a:hover{color:var(--fg)}
+.nav a.active{color:var(--accent);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none;border:0;cursor:pointer;font-family:inherit}
+.btn-accent{background:var(--accent);color:var(--on-accent)}
+.btn-ghost{border:1px solid var(--line);color:var(--fg);background:transparent}
+.btn-ghost:hover{border-color:var(--muted)}
+
+/* sections */
+section{padding-block:64px;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--label);font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
+.sh{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.sh h2{font-size:clamp(24px,3.2vw,34px);font-weight:900}
+.sh p{color:var(--muted);max-width:60ch}
+
+/* hero */
+.hero{border-top:0;padding-block:40px 64px}
+.hero .wrap{display:grid;gap:32px}
+.hero-copy{display:flex;flex-direction:column;gap:20px;align-self:center}
+.hero h1{font-size:clamp(36px,6vw,64px);line-height:1.15;font-weight:900}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero-lead{font-size:17px;color:var(--muted);max-width:34ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+.stat{padding:14px 10px;border-radius:12px;background:var(--surface);text-align:center}
+.stat b{display:block;font-size:clamp(18px,2.4vw,24px);font-weight:900;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+.reel{justify-self:center;width:100%;max-width:380px;display:block;text-decoration:none}
+.reel .vid{transition:border-color .2s}
+.reel:hover .vid{border-color:var(--accent)}
+
+/* video placeholder / player */
+.vid{position:relative;width:100%;max-width:100%;border-radius:var(--r);overflow:hidden;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--dim);font-size:13px}
+.vid.v916{aspect-ratio:9/16}.vid.v169{aspect-ratio:16/9}
+.vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.play{position:relative;z-index:1;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center}
+.tag{position:absolute;top:10px;left:10px;padding:4px 8px;border-radius:6px;background:rgba(0,0,0,.66);color:var(--fg);font-size:11px;font-weight:700;z-index:1}
+.tag.br{top:auto;left:auto;bottom:10px;right:10px}
+.tag.bl{top:auto;bottom:10px}
+.tag.tr{left:auto;right:10px;background:var(--accent);color:var(--on-accent)}
+
+/* case study */
+.cases{display:grid;gap:16px}
+.case{padding:22px;border-radius:20px;background:var(--surface);display:flex;flex-direction:column;gap:14px;min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:4px 9px;border-radius:6px;background:var(--surface-2);font-size:11px;font-weight:700}
+.big{font-size:clamp(28px,3.4vw,36px);font-weight:900;letter-spacing:-0.03em;color:var(--accent);line-height:1.15;font-variant-numeric:tabular-nums}
+.sub{font-size:13px;color:var(--muted)}
+.case h3{font-size:17px;font-weight:700;line-height:1.5}
+.case img{width:100%;border-radius:10px;display:block;background:var(--surface-2)}
+.case-main,.case-media{display:flex;flex-direction:column;gap:14px;min-width:0}
+.stats2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stats2 .big{font-size:clamp(22px,3vw,32px)}
+.stats2{row-gap:16px}
+.journey{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.journey li{position:relative;display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:12px;background:var(--surface-2)}
+.journey li:not(:last-child)::after{content:"→";position:absolute;right:-17px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:14px}
+.journey b{font-size:18px;font-weight:900;font-variant-numeric:tabular-nums}
+.journey li:last-child b{color:var(--accent)}
+.journey span{font-size:12px;color:var(--muted)}
+.outcome{font-size:14px;color:#CFCFCC}
+.outcome::before{content:"→ ";color:var(--accent);font-weight:700}
+.ba-title{font-size:12px;font-weight:700;color:var(--muted);margin-top:2px}
+.ba-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+.ba-grid figure{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.case .ba-grid img{border-radius:12px;border:1px solid var(--line)}
+.ba-grid figcaption{font-family:var(--label);font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--dim)}
+.ba-grid figure:last-child figcaption{color:var(--accent)}
+.ba-grid.plain figcaption{color:var(--muted);letter-spacing:0;font-family:var(--sans);font-weight:700;font-size:12px}
+.ba{display:flex;justify-content:space-between;font-family:var(--label);font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--dim)}
+.ba span:last-child{color:var(--accent)}
+details{border-top:1px solid var(--line);padding-top:12px;margin-top:auto}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:32px;font-size:13px;font-weight:700;color:var(--muted)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:18px;font-weight:400}
+details[open] summary::after{content:"−"}
+details ul{margin:10px 0 0;padding-left:18px;font-size:14px;line-height:1.8;color:#CFCFCC}
+
+/* works */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:700 13px var(--sans);cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.works{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.work{display:flex;flex-direction:column;gap:8px;min-width:0}
+.work b{font-size:14px}
+.work small{font-size:12px;color:var(--muted)}
+.more{margin-top:24px;width:100%}
+.eps{display:flex;flex-wrap:wrap;gap:4px}
+.eps a{display:inline-flex;align-items:center;justify-content:center;min-height:32px;min-width:40px;padding:0 8px;border-radius:8px;border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--muted);text-decoration:none}
+.eps a:hover{border-color:var(--accent);color:var(--fg)}
+.eps a.cur{border-color:var(--accent);color:var(--accent)}
+.fr{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease}
+.fr.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.fr{transition:none}}
+
+/* long-form */
+.longs{display:grid;gap:14px}
+.stack{display:grid;gap:14px}
+.work,.long{text-decoration:none}
+.long{display:flex;flex-direction:column;gap:8px;min-width:0}
+.long b{font-size:14px}
+.long small{font-size:12px;color:var(--muted)}
+
+/* pricing */
+.plans{display:grid;gap:14px}
+.plan{position:relative;padding:24px;border-radius:var(--r);background:var(--surface);display:flex;flex-direction:column;gap:12px}
+.plan.pick{outline:2px solid var(--accent);outline-offset:-2px}
+.badge{position:absolute;top:-11px;left:22px;padding:3px 10px;border-radius:6px;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:700}
+.svcs{display:grid;gap:14px}
+.svc{position:relative;padding:24px;border-radius:var(--r);background:var(--surface);display:flex;flex-direction:column;gap:12px;min-width:0}
+.svc.pick{outline:2px solid var(--accent);outline-offset:-2px}
+.svc-hd{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px}
+.svc h3{font-size:19px;font-weight:900}
+.svc-price{font-size:20px;font-weight:900;white-space:nowrap}
+.svc-price small{font-size:13px;font-weight:500;color:var(--muted)}
+.svc-price.quote{font-size:15px;color:var(--accent)}
+.svc-for{font-size:15px;color:var(--fg);font-weight:500}
+.svc-opts{display:flex;flex-wrap:wrap;gap:6px}
+.svc-opts span{padding:4px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--muted)}
+.svc ul{margin:0;padding-left:18px;font-size:14px;line-height:1.85;color:#CFCFCC}
+.diag{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 24px;padding:24px;border-radius:var(--r);border:1.5px solid var(--accent);margin-bottom:14px}
+.diag-txt{display:flex;flex-direction:column;gap:8px;max-width:60ch;min-width:0}
+.diag-badge{align-self:flex-start;padding:3px 10px;border-radius:6px;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:700}
+.diag h3{font-size:20px;font-weight:900}
+.diag p{font-size:14px;color:var(--muted)}
+.price.quote{font-size:22px;color:var(--accent)}
+.plan .per{font-size:13px;color:var(--muted);margin-top:-6px}
+.plan h3{font-size:16px;font-weight:700}
+.price{font-size:26px;font-weight:900}
+.price small{font-size:13px;font-weight:500;color:var(--muted)}
+.plan ul{margin:0;padding-left:18px;font-size:14px;line-height:1.85;color:#CFCFCC}
+.extra{margin-top:14px;padding:18px 22px;border-radius:var(--r);border:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px}
+.extra b{font-size:15px}
+.note{margin-top:14px;font-size:13px;color:var(--muted)}
+
+/* process */
+.steps{display:grid;gap:0;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--label);font-weight:800;color:var(--accent);min-width:28px}
+.steps b{display:block;font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+
+/* reviews */
+.reviews{display:grid;gap:14px}
+.review{padding:22px;border-radius:var(--r);background:var(--surface);display:flex;flex-direction:column;gap:12px}
+.review p{font-size:15px}
+.review small{font-size:12px;color:var(--muted)}
+
+/* faq */
+.faq details{border-top:0;border-bottom:1px solid var(--line);padding-block:6px;margin:0}
+.faq summary{color:var(--fg);font-size:15px;min-height:52px}
+.faq details p{padding-bottom:14px;font-size:14px;color:var(--muted)}
+
+/* contact */
+.contact{background:var(--accent);color:var(--on-accent);border-top:0}
+.contact .wrap{display:grid;gap:24px}
+.contact h2{font-size:clamp(28px,4vw,44px);font-weight:900;line-height:1.25}
+.contact p{max-width:44ch}
+.contact-actions{display:grid;gap:10px;align-content:end}
+.cta{display:flex;align-items:center;gap:14px;min-height:76px;padding:16px 18px;border-radius:16px;text-decoration:none}
+.cta svg{flex:none}
+.cta.kakao{background:var(--on-accent);color:var(--fg)}
+.cta.kakao:hover .cta-go{transform:translate(2px,-2px)}
+.cta.mail{border:1.5px solid var(--on-accent);color:var(--on-accent)}
+.cta-txt{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.cta-txt b{font-size:16px;font-weight:700;overflow-wrap:anywhere}
+.cta.mail .cta-txt b{user-select:all}
+.cta-txt small{font-size:13px;opacity:.72}
+.cta-go{font-size:20px;transition:transform .2s}
+.cta button{flex:none;min-height:44px;padding:0 16px;border-radius:10px;border:0;background:var(--on-accent);color:var(--fg);font:700 13px var(--sans);cursor:pointer}
+.ft{padding-block:24px;font-size:12px;color:var(--dim);border-top:0}
+
+@media (min-width:720px){
+  .works{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cases,.reviews{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .case-wide{grid-column:1/-1}
+  .longs{grid-template-columns:2fr 1fr}
+  .longs .stack{display:grid;gap:14px}
+  .svcs{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (min-width:960px){
+  .nav{display:flex}
+  .hero{padding-block:72px 88px}
+  .hero .wrap{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:56px}
+  .reel{max-width:360px;justify-self:end}
+  .case-wide{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;padding:28px}
+  .works{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .steps{grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+  .steps li{flex-direction:column;gap:8px;border-bottom:0;border-top:2px solid var(--line);padding-top:18px}
+  .contact .wrap{grid-template-columns:1.2fr 1fr;align-items:end}
+}
+</style>
+</head>
+<body>
+<header class="hd">
+  <div class="wrap">
+    <a class="logo" href="#top">채우리스튜디오<span>.</span></a>
+    <nav class="nav" aria-label="섹션">
+      <a href="#cases">성과</a><a href="#works">작업물</a><a href="#pricing">가격</a><a href="#contact">문의</a>
+    </nav>
+    <a class="btn btn-accent" href="#contact">문의하기</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <div class="eyebrow">Short-form video studio</div>
+        <h1>첫 3초에 멈추게,<br><em>끝까지</em> 보게.</h1>
+        <p class="hero-lead">브랜드 릴스·숏폼 전문 제작. 기획부터 촬영, 업로드용 납품까지 한 번에 맡기세요.</p>
+        <div class="hero-cta">
+          <a class="btn btn-accent" href="#contact">상담 문의하기</a>
+          <a class="btn btn-ghost" href="#cases">성과 사례 보기</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>470만+</b><span>최고 조회수</span></div>
+          <div class="stat"><b>1,977만+</b><span>한 채널 누적 조회수</span></div>
+          <div class="stat"><b>10곳</b><span>협업 브랜드</span></div>
+        </div>
+      </div>
+      <div class="reel">
+        <div class="vid v916" id="reel-box" data-src="assets/38a121b034.mp4" data-poster="assets/e9b7a54083.jpg">
+          <span class="tag">SHOWREEL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cases">
+    <div class="wrap">
+      <div class="sh"><div class="eyebrow">Case study</div><h2>숫자로 증명한 성과</h2></div>
+      <div class="cases">
+        <article class="case case-wide">
+          <div class="case-main">
+            <div class="chips"><span class="chip">치과</span><span class="chip">인스타 채널 운영</span><span class="chip">숏폼 기획 · 편집</span></div>
+            <div class="stats2">
+              <div><div class="big">1.1만</div><div class="sub">팔로워 · 342명에서 5개월</div></div>
+              <div><div class="big">406만</div><div class="sub">최고 조회수</div></div>
+              <div><div class="big">1,977만+</div><div class="sub">누적 조회수</div></div>
+              <div><div class="big">9,450배</div><div class="sub">평균 조회수 성장</div></div>
+            </div>
+            <h3>프로필 재정비부터 숏폼 기획까지, 신뢰를 쌓아 문의로 연결한 치과 채널</h3>
+            <ol class="journey" aria-label="팔로워 변화">
+              <li><b>342</b><span>컨설팅 전</span></li>
+              <li><b>7,211</b><span>5개월 후</span></li>
+              <li><b>1.1만</b><span>현재</span></li>
+            </ol>
+            <p class="outcome">단순 노출을 넘어 실제 문의 전화 유입과 매출 상승으로 이어졌어요.</p>
+            <p class="ba-title">프로필</p>
+            <div class="ba-grid"><figure><img src="assets/62bd2f6eb4.jpg" alt="컨설팅 전 팔로워 342명 프로필" loading="lazy"><figcaption>BEFORE</figcaption></figure><figure><img src="assets/ce48ee1aa8.jpg" alt="현재 팔로워 1.1만 명 프로필" loading="lazy"><figcaption>AFTER</figcaption></figure></div>
+            <details><summary>어떤 작업을 했나요</summary><ul><li>홍보형 프로필을 신뢰 중심 메시지로 개선</li><li>직관적인 채널 네이밍 적용</li><li>채널 톤앤매너 전면 재정비</li><li>초반 3초 Hook 기획으로 시청 이탈 방지</li><li>가독성 중심 자막 · 썸네일 템플릿 구축</li><li>전문 지식을 쉽게 풀어내는 정보형 편집</li></ul></details>
+          </div>
+          <div class="case-media">
+            <p class="ba-title">릴스 피드</p>
+            <div class="ba-grid"><figure><img src="assets/508989a211.jpg" alt="재설계 전 릴스 피드" loading="lazy"><figcaption>BEFORE</figcaption></figure><figure><img src="assets/c083e27639.jpg" alt="재설계 후 릴스 피드" loading="lazy"><figcaption>AFTER</figcaption></figure></div>
+          </div>
+        </article>
+        <article class="case">
+          <div class="chips"><span class="chip">뷰티</span><span class="chip">기획 · 촬영 · 편집 총괄</span></div>
+          <div><div class="big">최고 470만 뷰</div><div class="sub">숏폼 · 유튜브 콘텐츠 총괄 PD</div></div>
+          <h3>기획부터 촬영, 편집까지 맡아 만든 브랜드 바이럴</h3>
+          <div class="ba-grid plain"><figure><img src="assets/2571376295.jpg" alt="뷰티 브랜드 멀티 채널 인스타그램 프로필" loading="lazy"><figcaption>채널 프로필</figcaption></figure><figure><img src="assets/8354c6cace.jpg" alt="뷰티 브랜드 숏폼 피드" loading="lazy"><figcaption>숏폼 피드</figcaption></figure></div>
+          <details><summary>어떤 작업을 했나요</summary><ul><li>바이럴 트렌드를 접목한 숏폼 기획 · 연출</li><li>1인칭 · 예능형 구도 현장 촬영과 디렉팅</li><li>빠른 호흡의 예능 자막과 컷 편집</li><li>멀티 채널별 콘텐츠 라인업 설계</li></ul></details>
+        </article>
+        <article class="case">
+          <div class="chips"><span class="chip">제조업 B2B</span><span class="chip">유튜브 롱폼</span></div>
+          <div><div class="big">구독자 300% ↑</div><div class="sub">최고 조회수 35만+</div></div>
+          <h3>어려운 기술 콘텐츠를 쉽게 풀어 문의로 연결</h3>
+          <img src="assets/cfb309cd46.jpg" alt="제조업 기업 유튜브 채널 영상 목록" loading="lazy" style="border-radius:12px;border:1px solid var(--line)">
+          <details><summary>어떤 작업을 했나요</summary><ul><li>복잡한 기술 · 사업을 쉽게 푸는 정보형 기획</li><li>전문성과 신뢰도를 살리는 비주얼 톤 설계</li><li>타깃 맞춤 카피로 문의 전환 유도</li></ul></details>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="works">
+    <div class="wrap">
+      <div class="sh"><div class="eyebrow">Works</div><h2>숏폼 작업물</h2></div>
+      <div class="tabs" role="group" aria-label="업종 필터">
+        <button class="tab" type="button" data-cat="all" aria-pressed="true">전체</button>
+        <button class="tab" type="button" data-cat="치과" aria-pressed="false">치과</button>
+        <button class="tab" type="button" data-cat="일상" aria-pressed="false">일상</button>
+        <button class="tab" type="button" data-cat="카페" aria-pressed="false">카페</button>
+      </div>
+      <div class="works" id="works-grid"></div>
+    </div>
+  </section>
+
+  <section id="long">
+    <div class="wrap">
+      <div class="sh"><div class="eyebrow">Long-form</div><h2>롱폼 영상도 작업합니다</h2><p>롱폼 한 편에서 숏폼 여러 편까지 뽑아 드려요.</p></div>
+      <div class="longs">
+        <a class="long" href="https://www.youtube.com/watch?v=EgOjFQuQtTE" target="_blank" rel="noopener">
+          <div class="vid v169" data-src=""><div class="play"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></div><img src="assets/97bacf0d2b.jpg" alt="대가족 속초여행 영상 썸네일" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><span class="tag">일상 브이로그</span></div>
+          <b>대가족 여름휴가 속초여행</b><small>기획 · 촬영 · 컷편집 · 자막 · BGM · 효과음 · 색보정</small>
+        </a>
+        <div class="stack">
+          <a class="long" href="https://www.youtube.com/watch?v=-Zdyb3lqjIk" target="_blank" rel="noopener"><div class="vid v169" data-src=""><div class="play"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></div><img src="assets/09fe2dc315.jpg" alt="온라인 부업 강의 영상 썸네일" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><span class="tag">정보전달</span></div><b>온라인부업 완전 초보도 성공할 수 있는 방법 알려드립니다!</b><small>촬영 · 컷편집 · 자막 · BGM · 효과음</small></a>
+          <a class="long" href="https://www.youtube.com/watch?v=NnFIvXJi3z4" target="_blank" rel="noopener"><div class="vid v169" data-src=""><div class="play"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></div><img src="assets/877fbc6a35.jpg" alt="소규모 사업장 방지시설 사업 설명 영상 썸네일" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><span class="tag">정보전달</span></div><b>소규모 사업장 방지시설 사업에 대해 쉽게! 설명해 드리겠습니다.</b><small>기획 · 촬영 · 컷편집 · 자막 · BGM · 효과음</small></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="sh"><div class="eyebrow">Pricing</div><h2>서비스 &amp; 가격</h2><p>필요한 만큼 맡기세요. 채널 상황에 맞춰 제안해 드려요.</p></div>
+      <div class="diag">
+        <div class="diag-txt">
+          <span class="diag-badge">무료</span>
+          <h3>채널 무료 진단</h3>
+          <p>지금 운영 중인 인스타그램 · 유튜브 채널을 보고 프로필, 콘텐츠 구성, 훅을 점검해 드려요. 어떤 플랜이 맞는지도 함께 알려드릴게요.</p>
+        </div>
+        <a class="btn btn-accent" href="#contact">무료 진단 신청하기</a>
+      </div>
+      <div class="svcs">
+        <article class="svc">
+          <div class="svc-hd"><h3>숏폼 편집</h3><div class="svc-price">5만 원<small> ~ / 1편</small></div></div>
+          <p class="svc-for">찍어둔 영상은 있는데 편집할 시간이 없을 때</p>
+          <ul><li>컷편집 · 자막 · BGM · 효과음</li><li>60초 이내 릴스 · 쇼츠</li><li>수정 2회</li></ul>
+        </article>
+        <article class="svc">
+          <div class="svc-hd"><h3>숏폼 제작</h3><div class="svc-price quote">맞춤 견적</div></div>
+          <p class="svc-for">무엇을 찍어야 할지부터 막막할 때</p>
+          <ul><li>훅 · 대본 기획</li><li>출장 촬영 · 현장 디렉팅</li><li>편집 · 썸네일</li></ul>
+        </article>
+        <article class="svc pick">
+          <div class="svc-hd"><h3>채널 운영</h3><div class="svc-price quote">맞춤 견적</div></div>
+          <p class="svc-for">꾸준히 올리고 채널을 키우고 싶을 때</p>
+          <div class="svc-opts" aria-label="운영 주기"><span>주 2회</span><span>주 3회</span><span>매일</span></div>
+          <ul><li>월 1~2회 몰아서 촬영</li><li>기획 회의 · 업로드 대행</li><li>유입 · 반응 체크</li></ul>
+        </article>
+        <article class="svc">
+          <div class="svc-hd"><h3>롱폼 제작</h3><div class="svc-price quote">맞춤 견적</div></div>
+          <p class="svc-for">유튜브 본편이나 브이로그가 필요할 때</p>
+          <ul><li>기획 · 촬영 · 편집</li><li>자막 · BGM · 효과음 · 색보정</li><li>롱폼에서 숏폼 여러 편 추출</li></ul>
+        </article>
+      </div>
+      <p class="note">필요한 서비스만 골라서, 또는 묶어서 맡기실 수 있어요. 모든 가격은 VAT 별도예요.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sh"><div class="eyebrow">Process</div><h2>작업 진행 방식</h2></div>
+      <ol class="steps">
+        <li><div><b>문의 &amp; 상담</b><span>업종, 목표, 레퍼런스 공유</span></div></li>
+        <li><div><b>방향 협의</b><span>훅 · 톤 · 길이 · 일정 확정</span></div></li>
+        <li><div><b>소스 전달</b><span>촬영본 또는 촬영 가이드 진행</span></div></li>
+        <li><div><b>1차 편집 &amp; 수정</b><span>피드백 반영 수정 2회</span></div></li>
+        <li><div><b>최종 납품</b><span>업로드용 규격 · 썸네일 전달</span></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <h2>우리 브랜드 릴스,<br>지금 상담받아 보세요.</h2>
+        <p>채널 링크를 보내주시면 무료로 진단해 드려요. 레퍼런스 영상이 있으면 더 빠르게 안내드릴 수 있어요.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="cta kakao" href="https://open.kakao.com/o/sgfJE6Ti" target="_blank" rel="noopener">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 4C7 4 3 7.1 3 11c0 2.5 1.7 4.7 4.2 6l-.9 3.3 3.8-2.4c.6.1 1.2.1 1.9.1 5 0 9-3.1 9-7s-4-7-9-7z"/></svg>
+          <span class="cta-txt"><b>카카오톡 오픈채팅</b><small>빠른 상담 · 레퍼런스 공유</small></span>
+          <span class="cta-go" aria-hidden="true">↗</span>
+        </a>
+        <div class="cta mail">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>
+          <span class="cta-txt"><b id="mail">chaeuuri@naver.com</b><small>견적서 · 계약 문의</small></span>
+          <button type="button" id="copy">복사</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="ft"><div class="wrap">© 채우리스튜디오 · 유채리</div></footer>
+
+<script>
+(function(){
+  // 작업물 데이터: src에 미리보기 mp4(3~5초, 무음 루프), href에 릴스/쇼츠 원본 링크를 넣으면 됩니다.
+  var works=[
+    {cat:'치과',title:'기상 후에 바로 물 마셔도 괜찮을까?',role:'기획 · 촬영 · 편집',views:'406.4만',poster:'assets/34da581f64.jpg',src:'assets/7ad3f84c43.mp4',href:'https://www.instagram.com/reel/DYrqP4eOSZ_/'},
+    {cat:'치과',title:'양치를 제대로 안 했을 때',role:'기획 · 편집',views:'108.3만',poster:'assets/1f7b152e82.jpg',src:'assets/ba94912a85.mp4',href:'https://www.instagram.com/reel/DbNk96UBXlw/'},
+    {cat:'치과',title:'딸밖에 없으면 생기는 일',role:'기획 · 촬영 · 편집',views:'94.5만',poster:'assets/22cd243884.jpg',src:'assets/8b83d0acb5.mp4',href:'https://www.instagram.com/reel/DYCE6JNOe8Z/'},
+    {cat:'치과',title:'치간칫솔 사용법',role:'기획 · 촬영 · 편집',views:'47.8만',poster:'assets/2a36f70c57.jpg',src:'',href:'https://www.instagram.com/reel/DdGd6NTD2RF/'},
+    {cat:'카페',title:'카페에서 샐러드 채소 키우기',role:'기획 · 촬영 · 편집',views:'1.2만',poster:'assets/98cc8e2bcd.jpg',src:'assets/a21110f91c.mp4',href:'https://www.instagram.com/reel/Dcc0oM4PUAg/'},
+    {cat:'카페',title:'카페알바 상상 vs 실제',role:'기획 · 촬영 · 편집',views:'4.5천',poster:'assets/4249d5b587.jpg',src:'assets/a892242d6f.mp4',href:'https://www.instagram.com/reel/DaiZp7WPvCo/'},
+    {cat:'카페',title:'오늘은 비가 와서 손님이 없나 보다..',role:'기획 · 촬영 · 편집',views:'3.5천',poster:'assets/4b321b622b.jpg',src:'assets/3d0b4e9ccf.mp4',href:'https://www.instagram.com/reel/Dcz76bpRmOY/'},
+    {cat:'일상',title:'다이소 바질 키워서 잡아먹기',role:'기획 · 촬영 · 편집',views:'112.5만',poster:'assets/cc7c63d3c6.jpg',src:'assets/5548ab02ea.mp4',href:'https://www.instagram.com/reel/DadG9N-vkIZ/'},
+    {cat:'일상',title:'동네 떡집 나비란을 납치했다',role:'기획 · 촬영 · 편집',views:'누적 23만',eps:['https://www.instagram.com/reel/DcftNH8qCXY/','https://www.instagram.com/reel/Dcr7jlhv7SY/','https://www.instagram.com/reel/Dc_WeWuq88_/','https://www.instagram.com/reel/DdEYb12qYjx/','https://www.instagram.com/reel/DeZkUo2qJJY/'],frames:['assets/b72115f147.jpg','assets/9096053eb1.jpg','assets/11aadfa2cc.jpg','assets/c2964ef3a9.jpg','assets/7b2a18d99d.jpg'],src:'',href:'https://www.instagram.com/reel/DcftNH8qCXY/'},
+    {cat:'일상',title:'대전 1박 2일 뚜벅이 코스 추천',role:'기획 · 촬영 · 편집',views:'1.5만',poster:'assets/dcf31c73b4.jpg',src:'',href:'https://www.youtube.com/shorts/fslOLLiCPRQ'},
+    {cat:'일상',title:'시부모님과 떠난 2박 3일 무계획 여행 코스',role:'기획 · 촬영 · 편집',views:'1.3만',poster:'assets/533eaa2de1.jpg',src:'assets/98ec862e5e.mp4',href:'https://www.instagram.com/reel/DcNnhhhzCFQ/'},
+    {cat:'일상',title:'화분을 샀는데 식물이 생겼다',role:'기획 · 촬영 · 편집',views:'1.1만',poster:'assets/a703d38795.jpg',src:'assets/ab8ab6da74.mp4',href:'https://www.instagram.com/reel/DaywcNmPKi0/'}
+  ];
+  var grid=document.getElementById('works-grid');
+  var play='<div class="play"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></div>';
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  // '406.4만', '4.5천', '누적 23만' → 숫자
+  function viewNum(v){
+    var m=String(v||'').replace(/,/g,'').match(/([\d.]+)\s*(만|천)?/);
+    if(!m) return -1;
+    return parseFloat(m[1])*(m[2]==='만'?10000:m[2]==='천'?1000:1);
+  }
+  function render(cat){
+    var list=works.filter(function(w){return cat==='all'||w.cat===cat});
+    if(cat==='all') list=list.slice().sort(function(a,b){return viewNum(b.views)-viewNum(a.views)});
+    grid.innerHTML=list.map(function(w){
+      var ext=w.href&&w.href!=='#'?' target="_blank" rel="noopener"':'';
+      if(w.eps){
+        var nw=' target="_blank" rel="noopener"';
+        return '<div class="work" data-series><a href="'+esc(w.eps[0])+'"'+nw+' style="display:block;text-decoration:none;color:inherit"><div class="vid v916">'+w.frames.map(function(f,i){return '<img class="fr'+(i===0?' on':'')+'" src="'+esc(f)+'" alt="">'}).join('')+'<span class="tag">'+esc(w.cat)+'</span><span class="tag tr">시리즈 '+w.eps.length+'편</span><span class="tag bl">▶ '+esc(w.views)+'</span></div></a><b>'+esc(w.title)+'</b><small>'+esc(w.role)+'</small><div class="eps" aria-label="회차별 보기">'+w.eps.map(function(h,i){return '<a href="'+esc(h)+'"'+nw+(i===0?' class="cur"':'')+'>'+(i+1)+'편</a>'}).join('')+'</div></div>';
+      }
+      return '<a class="work" href="'+esc(w.href)+'"'+ext+'><div class="vid v916" data-src="'+esc(w.src)+'"'+(w.poster?' data-poster="'+esc(w.poster)+'"':'')+'>'+(w.poster?'<img src="'+esc(w.poster)+'" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">':'')+play+'<span class="tag">'+esc(w.cat)+'</span>'+(w.views?'<span class="tag bl">▶ '+esc(w.views)+'</span>':'')+'</div><b>'+esc(w.title)+'</b><small>'+esc(w.role)+'</small></a>';
+    }).join('');
+    hookVideos();
+    hookSeries();
+  }
+  var timers=[];
+  function hookSeries(){
+    timers.forEach(clearInterval); timers=[];
+    if(reduce) return;
+    document.querySelectorAll('.work[data-series]').forEach(function(card){
+      var frs=card.querySelectorAll('.fr'), chips=card.querySelectorAll('.eps a'), i=0, seen=true;
+      if('IntersectionObserver' in window){new IntersectionObserver(function(es){seen=es[0].isIntersecting},{threshold:.35}).observe(card)}
+      timers.push(setInterval(function(){
+        if(!seen||document.hidden) return;
+        frs[i].classList.remove('on'); if(chips[i]) chips[i].classList.remove('cur');
+        i=(i+1)%frs.length;
+        frs[i].classList.add('on'); if(chips[i]) chips[i].classList.add('cur');
+      },1600));
+    });
+  }
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+      render(b.dataset.cat);
+    });
+  });
+
+  // data-src가 있는 카드는 화면에 보일 때만 무음 루프 재생
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var io='IntersectionObserver' in window?new IntersectionObserver(function(es){
+    es.forEach(function(e){var v=e.target.querySelector('video');if(!v)return;if(e.isIntersecting&&!reduce){v.play().catch(function(){})}else{v.pause()}});
+  },{threshold:.35}):null;
+  function hookVideos(){
+    document.querySelectorAll('.vid[data-src]').forEach(function(box){
+      var src=box.getAttribute('data-src');
+      if(!src||box.querySelector('video'))return;
+      var v=document.createElement('video');
+      v.src=src;v.muted=true;v.loop=true;v.playsInline=true;v.preload='metadata';
+      v.setAttribute('aria-hidden','true');
+      var p=box.getAttribute('data-poster');if(p)v.poster=p;
+      box.appendChild(v);
+      if(io)io.observe(box);
+    });
+  }
+  render('all');
+
+  // 헤더 메뉴: 보고 있는 섹션을 연두색으로 표시
+  var navLinks=[].slice.call(document.querySelectorAll('.nav a'));
+  var secs=navLinks.map(function(a){return document.querySelector(a.getAttribute('href'))}).filter(Boolean);
+  function spy(){
+    var y=window.scrollY+window.innerHeight*0.35, cur=null;
+    secs.forEach(function(sec){ if(sec.offsetTop<=y) cur=sec.id; });
+    var last=secs[secs.length-1];
+    if(last && window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4 && last.getBoundingClientRect().top<window.innerHeight) cur=last.id;
+    navLinks.forEach(function(a){
+      var on=a.getAttribute('href')==='#'+cur;
+      a.classList.toggle('active',on);
+      if(on) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current');
+    });
+  }
+  window.addEventListener('scroll',spy,{passive:true});
+  window.addEventListener('resize',spy);
+  spy();
+
+  var btn=document.getElementById('copy');
+  btn.addEventListener('click',function(){
+    var t=document.getElementById('mail').textContent;
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('mail'));var s=getSelection();s.removeAllRanges();s.addRange(r)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){btn.textContent='복사됨';setTimeout(function(){btn.textContent='복사'},1600)},sel);
+    }else sel();
+  });
+})();
+</script>
+</body>
+</html>
